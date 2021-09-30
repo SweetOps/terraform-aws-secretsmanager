@@ -24,8 +24,8 @@ module "secrets" {
   secret_version = {
     secret_string = jsonencode(
       {
-        ssh_public_key  = module.ssh_key_pair.public_key
-        ssh_private_key = module.ssh_key_pair.private_key
+        ssh_public_key  = base64encode(module.ssh_key_pair.public_key)
+        ssh_private_key = base64encode(module.ssh_key_pair.private_key)
       }
     )
   }
