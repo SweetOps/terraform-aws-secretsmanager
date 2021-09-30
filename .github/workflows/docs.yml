@@ -1,0 +1,28 @@
+
+# blocked by https://github.com/terraform-docs/gh-actions/pull/46
+# name: Generate terraform docs
+# on:
+#   pull_request:
+
+# jobs:
+#   docs:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v2
+#       with:
+#         ref: ${{ github.event.pull_request.head.ref }}
+
+#     - name: Render terraform docs inside the examples/basic/README.md
+#       uses: terraform-docs/gh-actions@v0.10.0
+#       with:
+#         working-dir: ./examples/basic/
+#         git-push: "false"
+#         config-file: ".terraform-docs.yml"
+
+#     - name: Render terraform docs inside the README.md
+#       uses: terraform-docs/gh-actions@v0.10.0
+#       with:
+#         working-dir: .
+#         git-push: "true"
+#         config-file: ".terraform-docs.yml"
+
