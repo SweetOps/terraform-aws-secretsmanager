@@ -56,12 +56,16 @@ variable "kms_key" {
 
 variable "secret_version" {
   type = object({
+    enabled       = optional(bool)
     secret_string = optional(string)
     secret_binary = optional(string)
   })
   sensitive   = true
   default     = {}
   description = <<-DOC
+    enabled:
+        Whether to create secret version. 
+        Default value: `false`
     secret_string:
         Specifies text data that you want to encrypt and store in this version of the secret. 
         This is required if `secret_binary` is not set.
@@ -74,6 +78,7 @@ variable "secret_version" {
 
 variable "rotation" {
   type = object({
+    enabled                  = optional(bool)
     lambda_arn               = string
     automatically_after_days = number
   })
