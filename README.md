@@ -28,6 +28,7 @@ module "secrets" {
   version = "0.1.0"
 
   secret_version = {
+    enabled = true
     secret_string = jsonencode(
       {
         ssh_public_key  = base64encode(module.ssh_key_pair.public_key)
@@ -52,7 +53,7 @@ module "secrets" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.60.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.0 |
 
 ## Modules
 
@@ -93,8 +94,8 @@ module "secrets" {
 | <a name="input_policy"></a> [policy](#input\_policy) | Valid JSON document representing a resource policy. | `string` | `null` | no |
 | <a name="input_recovery_window_in_days"></a> [recovery\_window\_in\_days](#input\_recovery\_window\_in\_days) | Valid JSON document representing a resource policy. | `number` | `30` | no |
 | <a name="input_regex_replace_chars"></a> [regex\_replace\_chars](#input\_regex\_replace\_chars) | Terraform regular expression (regex) string.<br>Characters matching the regex will be removed from the ID elements.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
-| <a name="input_rotation"></a> [rotation](#input\_rotation) | enabled:<br>    Whether to create secret rotation rule. <br>    Default value: `false`<br>lambda\_arn:<br>    Specifies the ARN of the Lambda function that can rotate the secret.<br>automatically\_after\_days:<br>    Specifies the number of days between automatic scheduled rotations of the secret. | <pre>object({<br>    lambda_arn               = string<br>    automatically_after_days = number<br>  })</pre> | <pre>{<br>  "automatically_after_days": 0,<br>  "lambda_arn": ""<br>}</pre> | no |
-| <a name="input_secret_version"></a> [secret\_version](#input\_secret\_version) | secret\_string:<br>    Specifies text data that you want to encrypt and store in this version of the secret. <br>    This is required if `secret_binary` is not set.<br>secret\_binary:<br>    Specifies binary data that you want to encrypt and store in this version of the secret. <br>    This is required if `secret_string` is not set. <br>    Needs to be encoded to base64. | <pre>object({<br>    secret_string = optional(string)<br>    secret_binary = optional(string)<br>  })</pre> | `{}` | no |
+| <a name="input_rotation"></a> [rotation](#input\_rotation) | enabled:<br>    Whether to create secret rotation rule. <br>    Default value: `false`<br>lambda\_arn:<br>    Specifies the ARN of the Lambda function that can rotate the secret.<br>automatically\_after\_days:<br>    Specifies the number of days between automatic scheduled rotations of the secret. | <pre>object({<br>    enabled                  = optional(bool)<br>    lambda_arn               = string<br>    automatically_after_days = number<br>  })</pre> | <pre>{<br>  "automatically_after_days": 0,<br>  "lambda_arn": ""<br>}</pre> | no |
+| <a name="input_secret_version"></a> [secret\_version](#input\_secret\_version) | enabled:<br>    Whether to create secret version. <br>    Default value: `false`<br>secret\_string:<br>    Specifies text data that you want to encrypt and store in this version of the secret. <br>    This is required if `secret_binary` is not set.<br>secret\_binary:<br>    Specifies binary data that you want to encrypt and store in this version of the secret. <br>    This is required if `secret_string` is not set. <br>    Needs to be encoded to base64. | <pre>object({<br>    enabled       = optional(bool)<br>    secret_string = optional(string)<br>    secret_binary = optional(string)<br>  })</pre> | `{}` | no |
 | <a name="input_stage"></a> [stage](#input\_stage) | ID element. Usually used to indicate role, e.g. 'prod', 'staging', 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Additional tags (e.g. `{'BusinessUnit': 'XYZ'}`).<br>Neither the tag keys nor the tag values will be modified by this module. | `map(string)` | `{}` | no |
 | <a name="input_tenant"></a> [tenant](#input\_tenant) | ID element \_(Rarely used, not included by default)\_. A customer identifier, indicating who this instance of a resource is for | `string` | `null` | no |

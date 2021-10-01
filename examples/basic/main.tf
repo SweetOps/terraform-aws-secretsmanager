@@ -22,6 +22,7 @@ module "secrets" {
   version = "0.1.0"
 
   secret_version = {
+    enabled = true
     secret_string = jsonencode(
       {
         ssh_public_key  = base64encode(module.ssh_key_pair.public_key)
