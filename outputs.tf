@@ -1,3 +1,8 @@
+output "name" {
+  value       = local.secret_name
+  description = "Name of the secret"
+}
+
 output "id" {
   value       = local.secret_id
   description = "ID of the secret"
