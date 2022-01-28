@@ -1,5 +1,6 @@
 locals {
   enabled                 = module.this.enabled
+  secret_name             = one(aws_secretsmanager_secret.default[*].name)
   secret_id               = one(aws_secretsmanager_secret.default[*].id)
   secret_arn              = one(aws_secretsmanager_secret.default[*].arn)
   version_id              = one(aws_secretsmanager_secret_version.default[*].version_id)

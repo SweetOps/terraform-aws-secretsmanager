@@ -1,6 +1,6 @@
 module "label" {
   source  = "cloudposse/label/null"
-  version = "0.24.1"
+  version = "0.25.0"
 
   name      = "alpha"
   namespace = "so"
@@ -19,7 +19,7 @@ module "ssh_key_pair" {
 
 module "secrets" {
   source  = "SweetOps/secretsmanager/aws"
-  version = "0.1.0"
+  version = "../../"
 
   secret_version = {
     enabled = true
