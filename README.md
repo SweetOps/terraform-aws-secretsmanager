@@ -6,7 +6,7 @@ Terraform module to provision and manage AWS Secrets Manager.
 ```hcl
 module "label" {
   source  = "cloudposse/label/null"
-  version = "0.24.1"
+  version = "0.25.0"
 
   name      = "alpha"
   namespace = "so"
@@ -28,7 +28,6 @@ module "secrets" {
   version = "0.1.0"
 
   secret_version = {
-    enabled = true
     secret_string = jsonencode(
       {
         ssh_public_key  = base64encode(module.ssh_key_pair.public_key)
@@ -110,6 +109,7 @@ module "secrets" {
 | <a name="output_id"></a> [id](#output\_id) | ID of the secret |
 | <a name="output_key_arn"></a> [key\_arn](#output\_key\_arn) | KMS key ARN |
 | <a name="output_kms_key_id"></a> [kms\_key\_id](#output\_kms\_key\_id) | KMS key ID |
+| <a name="output_name"></a> [name](#output\_name) | Name of the secret |
 | <a name="output_version_id"></a> [version\_id](#output\_version\_id) | The unique identifier of the version of the secret. |
 <!-- END_TF_DOCS --> 
 
