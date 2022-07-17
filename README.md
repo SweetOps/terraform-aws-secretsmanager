@@ -58,7 +58,7 @@ module "secrets" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_kms_key"></a> [kms\_key](#module\_kms\_key) | cloudposse/kms-key/aws | 0.11.0 |
+| <a name="module_kms_key"></a> [kms\_key](#module\_kms\_key) | cloudposse/kms-key/aws | 0.12.1 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
 
 ## Resources
@@ -103,11 +103,11 @@ module "secrets" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_alias_arn"></a> [alias\_arn](#output\_alias\_arn) | KMS key alias ARN |
-| <a name="output_alias_name"></a> [alias\_name](#output\_alias\_name) | KMS key alias name |
 | <a name="output_arn"></a> [arn](#output\_arn) | ARN of the secret |
 | <a name="output_id"></a> [id](#output\_id) | ID of the secret |
-| <a name="output_key_arn"></a> [key\_arn](#output\_key\_arn) | KMS key ARN |
+| <a name="output_kms_key_alias_arn"></a> [kms\_key\_alias\_arn](#output\_kms\_key\_alias\_arn) | KMS key alias ARN |
+| <a name="output_kms_key_alias_name"></a> [kms\_key\_alias\_name](#output\_kms\_key\_alias\_name) | KMS key alias name |
+| <a name="output_kms_key_arn"></a> [kms\_key\_arn](#output\_kms\_key\_arn) | KMS key ARN |
 | <a name="output_kms_key_id"></a> [kms\_key\_id](#output\_kms\_key\_id) | KMS key ID |
 | <a name="output_name"></a> [name](#output\_name) | Name of the secret |
 | <a name="output_version_id"></a> [version\_id](#output\_version\_id) | The unique identifier of the version of the secret. |
