@@ -57,7 +57,7 @@ No providers.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_label"></a> [label](#module\_label) | cloudposse/label/null | 0.25.0 |
-| <a name="module_secrets"></a> [secrets](#module\_secrets) | SweetOps/secretsmanager/aws | ../../ |
+| <a name="module_secrets"></a> [secrets](#module\_secrets) | ../../ | n/a |
 | <a name="module_ssh_key_pair"></a> [ssh\_key\_pair](#module\_ssh\_key\_pair) | cloudposse/key-pair/aws | 0.18.1 |
 
 ## Resources

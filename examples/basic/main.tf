@@ -18,8 +18,7 @@ module "ssh_key_pair" {
 }
 
 module "secrets" {
-  source  = "SweetOps/secretsmanager/aws"
-  version = "../../"
+  source = "../../"
 
   secret_version = {
     enabled = true
