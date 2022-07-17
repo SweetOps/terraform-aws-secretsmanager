@@ -33,7 +33,7 @@ locals {
 
 module "kms_key" {
   source  = "cloudposse/kms-key/aws"
-  version = "0.11.0"
+  version = "0.12.1"
 
   description             = local.kms_key["description"]
   deletion_window_in_days = local.kms_key["deletion_window_in_days"]
