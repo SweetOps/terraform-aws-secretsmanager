@@ -27,18 +27,13 @@ variable "kms_key_id" {
 
 variable "kms_key" {
   type = object({
-    enabled                 = optional(bool)
-    description             = optional(string)
+    enabled                 = optional(bool, true)
+    description             = optional(string, "Managed by Terraform")
     alias                   = optional(string)
-    deletion_window_in_days = optional(number)
-    enable_key_rotation     = optional(bool)
+    deletion_window_in_days = optional(number, 30)
+    enable_key_rotation     = optional(bool, true)
   })
-  default = {
-    deletion_window_in_days = 30
-    description             = "Managed by Terraform"
-    enable_key_rotation     = true
-    enabled                 = true
-  }
+  default     = {}
   description = <<-DOC
     enabled:
         Whether to create KSM key.
@@ -56,7 +51,7 @@ variable "kms_key" {
 
 variable "secret_version" {
   type = object({
-    enabled       = optional(bool)
+    enabled       = optional(bool, true)
     secret_string = optional(string)
     secret_binary = optional(string)
   })
@@ -78,7 +73,7 @@ variable "secret_version" {
 
 variable "rotation" {
   type = object({
-    enabled                  = optional(bool)
+    enabled                  = optional(bool, false)
     lambda_arn               = string
     automatically_after_days = number
   })
