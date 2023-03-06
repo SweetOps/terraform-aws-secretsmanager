@@ -29,5 +29,6 @@ module "secrets" {
       }
     )
   }
-  context = module.label.context
+  recovery_window_in_days = 0
+  context                 = module.label.context
 }
