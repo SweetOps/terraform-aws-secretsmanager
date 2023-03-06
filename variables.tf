@@ -16,6 +16,30 @@ variable "recovery_window_in_days" {
   description = "Valid JSON document representing a resource policy."
 }
 
+variable "force_overwrite_replica_secret" {
+  type        = bool
+  default     = true
+  description = "Whether to overwrite a secret with the same name in the destination Region."
+}
+
+variable "replicas" {
+  type = list(
+    object(
+      {
+        kms_key_id = string
+        region     = string
+      }
+    )
+  )
+  default     = []
+  description = <<-DOC
+    kms_key_id:
+        ARN, Key ID, or Alias of the AWS KMS key within the region secret is replicated to.
+    region:
+        Region for replicating the secret.
+  DOC
+}
+
 variable "kms_key_id" {
   type        = string
   default     = null

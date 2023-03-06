@@ -26,12 +26,22 @@ module "kms_key" {
 resource "aws_secretsmanager_secret" "default" {
   count = local.enabled ? 1 : 0
 
-  name                    = module.this.id
-  description             = var.description
-  policy                  = var.policy
-  tags                    = module.this.tags
-  recovery_window_in_days = var.recovery_window_in_days
-  kms_key_id              = local.kms_key_id
+  name                           = module.this.id
+  description                    = var.description
+  policy                         = var.policy
+  tags                           = module.this.tags
+  recovery_window_in_days        = var.recovery_window_in_days
+  kms_key_id                     = local.kms_key_id
+  force_overwrite_replica_secret = var.force_overwrite_replica_secret
+
+  dynamic "replica" {
+    for_each = var.replicas
+
+    content {
+      kms_key_id = replica.value.kms_key_id
+      region     = replica.value.region
+    }
+  }
 }
 
 resource "aws_secretsmanager_secret_version" "default" {
