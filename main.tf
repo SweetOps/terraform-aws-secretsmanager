@@ -3,8 +3,7 @@ locals {
   secret_name             = one(aws_secretsmanager_secret.default[*].name)
   secret_id               = one(aws_secretsmanager_secret.default[*].id)
   secret_arn              = one(aws_secretsmanager_secret.default[*].arn)
-  version_id              = one(aws_secretsmanager_secret_version.default[*].version_id)
-  secret_version_enabled  = local.enabled && var.secret_version["enabled"]
+  version_id              = local.enabled && !var.secret_version["ignore_changes_enabled"] ? one(aws_secretsmanager_secret_version.default[*].version_id) : one(aws_secretsmanager_secret_version.ignore_changes[*].version_id)
   secret_rotation_enabled = local.enabled && var.rotation["enabled"]
   kms_key_enabled         = local.enabled && var.kms_key["enabled"]
   kms_key_id              = var.kms_key["enabled"] ? module.kms_key.key_id : var.kms_key_id
@@ -45,11 +44,26 @@ resource "aws_secretsmanager_secret" "default" {
 }
 
 resource "aws_secretsmanager_secret_version" "default" {
-  count = local.secret_version_enabled ? 1 : 0
+  count = local.enabled && !var.secret_version["ignore_changes_enabled"] ? 1 : 0
 
   secret_id     = local.secret_id
   secret_string = var.secret_version["secret_string"]
   secret_binary = var.secret_version["secret_binary"]
+}
+
+resource "aws_secretsmanager_secret_version" "ignore_changes" {
+  count = local.enabled && var.secret_version["ignore_changes_enabled"] ? 1 : 0
+
+  secret_id     = local.secret_id
+  secret_string = var.secret_version["secret_string"]
+  secret_binary = var.secret_version["secret_binary"]
+
+  lifecycle {
+    ignore_changes = [
+      secret_string,
+      secret_binary,
+    ]
+  }
 }
 
 resource "aws_secretsmanager_secret_rotation" "default" {

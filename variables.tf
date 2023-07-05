@@ -75,15 +75,15 @@ variable "kms_key" {
 
 variable "secret_version" {
   type = object({
-    enabled       = optional(bool, true)
-    secret_string = optional(string)
-    secret_binary = optional(string)
+    secret_string          = optional(string, "{}")
+    secret_binary          = optional(string)
+    ignore_changes_enabled = optional(bool, false)
   })
   sensitive   = true
   default     = {}
   description = <<-DOC
-    enabled:
-        Whether to create secret version. 
+    ignore_changes_enabled:
+        Whether to ignore changes in `secret_string` and `secret_binary`.
         Default value: `false`
     secret_string:
         Specifies text data that you want to encrypt and store in this version of the secret. 
