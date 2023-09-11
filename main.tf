@@ -74,5 +74,7 @@ resource "aws_secretsmanager_secret_rotation" "default" {
 
   rotation_rules {
     automatically_after_days = var.rotation["automatically_after_days"]
+    duration                 = var.rotation["duration"]
+    schedule_expression      = var.rotation["schedule_expression"]
   }
 }
