@@ -99,11 +99,12 @@ variable "rotation" {
   type = object({
     enabled                  = optional(bool, false)
     lambda_arn               = string
-    automatically_after_days = number
+    automatically_after_days = optional(number, null)
+    duration                 = optional(string, null)
+    schedule_expression      = optional(string, null)
   })
   default = {
-    lambda_arn               = ""
-    automatically_after_days = 0
+    lambda_arn = ""
   }
   description = <<-DOC
     enabled:
@@ -113,5 +114,9 @@ variable "rotation" {
         Specifies the ARN of the Lambda function that can rotate the secret.
     automatically_after_days:
         Specifies the number of days between automatic scheduled rotations of the secret.
+    duration:
+        The length of the rotation window in hours. For example, `3h` for a three hour window.
+    schedule_expression:
+        A `cron()` or `rate()` expression that defines the schedule for rotating your secret. Either `automatically_after_days` or `schedule_expression` must be specified.
   DOC
 }
