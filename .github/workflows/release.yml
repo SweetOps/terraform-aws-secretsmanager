@@ -3,14 +3,15 @@ name: Release Drafter
 on:
   push:
     branches:
-      - master
       - main
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: release-drafter/release-drafter@v5
+      - name: Create Release
+        if: "!contains(github.event.head_commit.message, '[skip-release]')"
+        uses: release-drafter/release-drafter@v6
         with:
           publish: true
           prerelease: false

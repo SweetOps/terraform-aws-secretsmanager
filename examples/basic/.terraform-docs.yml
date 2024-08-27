@@ -24,7 +24,7 @@ settings:
   hide-empty: false
   html: true
   indent: 2
-  lockfile: true
+  lockfile: false
   required: true
   sensitive: true
   type: true

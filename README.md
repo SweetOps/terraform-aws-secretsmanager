@@ -46,13 +46,13 @@ module "secrets" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.16 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.16 |
 
 ## Modules
 
@@ -96,7 +96,7 @@ module "secrets" {
 | <a name="input_recovery_window_in_days"></a> [recovery\_window\_in\_days](#input\_recovery\_window\_in\_days) | Valid JSON document representing a resource policy. | `number` | `30` | no |
 | <a name="input_regex_replace_chars"></a> [regex\_replace\_chars](#input\_regex\_replace\_chars) | Terraform regular expression (regex) string.<br>Characters matching the regex will be removed from the ID elements.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
 | <a name="input_replicas"></a> [replicas](#input\_replicas) | kms\_key\_id:<br>    ARN, Key ID, or Alias of the AWS KMS key within the region secret is replicated to.<br>region:<br>    Region for replicating the secret. | <pre>list(<br>    object(<br>      {<br>        kms_key_id = string<br>        region     = string<br>      }<br>    )<br>  )</pre> | `[]` | no |
-| <a name="input_rotation"></a> [rotation](#input\_rotation) | enabled:<br>    Whether to create secret rotation rule. <br>    Default value: `false`<br>lambda\_arn:<br>    Specifies the ARN of the Lambda function that can rotate the secret.<br>automatically\_after\_days:<br>    Specifies the number of days between automatic scheduled rotations of the secret. | <pre>object({<br>    enabled                  = optional(bool, false)<br>    lambda_arn               = string<br>    automatically_after_days = number<br>  })</pre> | <pre>{<br>  "automatically_after_days": 0,<br>  "lambda_arn": ""<br>}</pre> | no |
+| <a name="input_rotation"></a> [rotation](#input\_rotation) | enabled:<br>    Whether to create secret rotation rule. <br>    Default value: `false`<br>lambda\_arn:<br>    Specifies the ARN of the Lambda function that can rotate the secret.<br>automatically\_after\_days:<br>    Specifies the number of days between automatic scheduled rotations of the secret.<br>duration:<br>    The length of the rotation window in hours. For example, `3h` for a three hour window.<br>schedule\_expression:<br>    A `cron()` or `rate()` expression that defines the schedule for rotating your secret. Either `automatically_after_days` or `schedule_expression` must be specified. | <pre>object({<br>    enabled                  = optional(bool, false)<br>    lambda_arn               = string<br>    automatically_after_days = optional(number, null)<br>    duration                 = optional(string, null)<br>    schedule_expression      = optional(string, null)<br>  })</pre> | <pre>{<br>  "lambda_arn": ""<br>}</pre> | no |
 | <a name="input_secret_version"></a> [secret\_version](#input\_secret\_version) | ignore\_changes\_enabled:<br>    Whether to ignore changes in `secret_string` and `secret_binary`.<br>    Default value: `false`<br>secret\_string:<br>    Specifies text data that you want to encrypt and store in this version of the secret. <br>    This is required if `secret_binary` is not set.<br>secret\_binary:<br>    Specifies binary data that you want to encrypt and store in this version of the secret. <br>    This is required if `secret_string` is not set. <br>    Needs to be encoded to base64. | <pre>object({<br>    secret_string          = optional(string, "{}")<br>    secret_binary          = optional(string)<br>    ignore_changes_enabled = optional(bool, false)<br>  })</pre> | `{}` | no |
 | <a name="input_stage"></a> [stage](#input\_stage) | ID element. Usually used to indicate role, e.g. 'prod', 'staging', 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Additional tags (e.g. `{'BusinessUnit': 'XYZ'}`).<br>Neither the tag keys nor the tag values will be modified by this module. | `map(string)` | `{}` | no |
