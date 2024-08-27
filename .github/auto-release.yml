@@ -34,21 +34,23 @@ categories:
   - 'feat'
 - title: '🐛 Bug Fixes'
   labels:
-  - 'auto-update'
   - 'patch'
   - 'fix'
   - 'bugfix'
   - 'bug'
   - 'hotfix'
   - 'refactor'
-  - 'ci'
-  - 'build'
   - 'docs'
   - 'test'
   - 'chore'
-- title: '🤖 Automatic Updates'
+- title: '📦 Updates'
   labels:
   - 'auto-update'
+  - 'build'
+  - 'ci'
+- title: ':hammer_and_wrench: Refactoring'
+  labels:
+  - 'refactor'
 
 change-template: |
   <details>

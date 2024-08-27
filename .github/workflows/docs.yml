@@ -6,30 +6,13 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Render terraform docs inside the examples/basic/README.md
-        uses: terraform-docs/gh-actions@v1.0.0
+      - name: Render terraform docs
+        uses: terraform-docs/gh-actions@v1.2.0
         with:
-          working-dir: ./examples/basic/
-          git-push: "false"
-          output-file: README.md
-          config-file: ".terraform-docs.yml"
-
-      - name: Render terraform docs inside the examples/basic/README.md
-        uses: terraform-docs/gh-actions@v1.0.0
-        with:
-          working-dir: ./examples/replicated/
-          git-push: "false"
-          output-file: README.md
-          config-file: ".terraform-docs.yml"
-
-      - name: Render terraform docs inside the README.md
-        uses: terraform-docs/gh-actions@v1.0.0
-        with:
-          working-dir: .
+          working-dir: .,./examples/basic,./examples/replicated
           git-push: "true"
-          output-file: README.md
-          config-file: ".terraform-docs.yml"

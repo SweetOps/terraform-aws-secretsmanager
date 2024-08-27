@@ -4,25 +4,34 @@ on:
   pull_request_target:
     types:
       - opened
-      - reopened
       - edited
       - synchronize
 
 jobs:
   lint-pr:
     runs-on: ubuntu-latest
-
     steps:
       - name: Lint PR
-        uses: aslafy-z/conventional-pr-title-action@v3.0.1
+        uses: amannn/action-semantic-pull-request@v5
         with:
-          preset: conventional-changelog-angular@^5.0.6
+          types: |
+            build
+            ci
+            docs
+            feat
+            fix
+            perf
+            refactor
+            style
+            test
+            chore
+          requireScope: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Comment for PR title conformance
         if: failure()
-        uses: peter-evans/create-or-update-comment@v3
+        uses: peter-evans/create-or-update-comment@v4
         with:
           issue-number: ${{tojson(github.event.number)}}
           body: |
@@ -40,3 +49,10 @@ jobs:
             * **style**: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
             * **test**: Adding missing tests or correcting existing tests
             * **chore**: No production code change
+
+      - name: Add label to PR
+        if: github.actor != 'dependabot[bot]'
+        uses: fuxingloh/multi-labeler@v4.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          config-path: .github/labeler.yml

@@ -1,0 +1,106 @@
+name: Validate and Test Terraform manifests
+
+on:
+  pull_request:
+
+env:
+  TERRAFORM_VERSION: ~1.9
+
+jobs:
+  terraform:
+    name: terraform
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+
+      - name: Ensure Terraform code is formated
+        run: terraform fmt -check
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Validate Terraform code
+        run: terraform validate -no-color
+
+  trivy:
+    name: trivy
+    runs-on: ubuntu-latest
+    needs: terraform
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Run trivy with reviewdog output on the PR
+        uses: reviewdog/action-trivy@v1
+        with:
+          trivy_command: config
+          trivy_target: .
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          filter_mode: diff_context
+          fail_on_error: "true"
+
+  tflint:
+    name: tflint
+    runs-on: ubuntu-latest
+    needs: terraform
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Check with tflint
+        uses: reviewdog/action-tflint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          fail_on_error: "true"
+          filter_mode: diff_context
+          flags: "--module"
+
+  terratest:
+    name: terratest
+    runs-on: ubuntu-latest
+    needs: 
+      - terraform
+      - trivy
+      - tflint
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+
+      - name: Setup go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: tests/go.mod
+          cache-dependency-path: |
+            tests/go.sum
+
+      - name: Run terratest
+        run: make terratest
