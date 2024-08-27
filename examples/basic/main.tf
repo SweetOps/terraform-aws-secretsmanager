@@ -2,19 +2,10 @@ module "label" {
   source  = "cloudposse/label/null"
   version = "0.25.0"
 
-  name      = "alpha"
-  namespace = "so"
-  stage     = "staging"
-}
-
-module "ssh_key_pair" {
-  source  = "cloudposse/key-pair/aws"
-  version = "0.18.1"
-
-  ssh_public_key_path = "keys/"
-  generate_ssh_key    = "true"
-
-  context = module.label.context
+  name       = "alpha"
+  namespace  = "so"
+  stage      = "staging"
+  attributes = var.attributes
 }
 
 module "secrets" {
@@ -23,11 +14,51 @@ module "secrets" {
   secret_version = {
     secret_string = jsonencode(
       {
-        ssh_public_key  = base64encode(module.ssh_key_pair.public_key)
-        ssh_private_key = base64encode(module.ssh_key_pair.private_key)
+        secret_foo = "foo"
+        secret_bar = "bar"
       }
     )
   }
   recovery_window_in_days = 0
   context                 = module.label.context
+}
+
+output "name" {
+  value       = module.secrets.name
+  description = "Name of the secret"
+}
+
+output "id" {
+  value       = module.secrets.id
+  description = "ID of the secret"
+}
+
+output "arn" {
+  value       = module.secrets.arn
+  description = "ARN of the secret"
+}
+
+output "version_id" {
+  value       = module.secrets.version_id
+  description = "The unique identifier of the version of the secret."
+}
+
+output "kms_key_arn" {
+  value       = module.secrets.kms_key_arn
+  description = "KMS key ARN"
+}
+
+output "kms_key_id" {
+  value       = module.secrets.kms_key_id
+  description = "KMS key ID"
+}
+
+output "kms_key_alias_arn" {
+  value       = module.secrets.kms_key_alias_arn
+  description = "KMS key alias ARN"
+}
+
+output "kms_key_alias_name" {
+  value       = module.secrets.kms_key_alias_name
+  description = "KMS key alias name"
 }
