@@ -75,7 +75,7 @@ func deploy(t *testing.T, workingDir, awsEndpoint string) {
 	)
 
 	terra_ts.SaveTerraformOptions(t, workingDir, tfOpts)
-	terraform.InitAndApply(t, tfOpts)
+	terraform.InitAndApplyAndIdempotent(t, tfOpts)
 }
 
 func validateOutputs(t *testing.T, workingDir string) {

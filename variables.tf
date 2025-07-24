@@ -80,7 +80,7 @@ variable "secret_version" {
       secret_binary          = optional(string)
       ignore_changes_enabled = optional(bool, false)
       ephemeral              = optional(bool, false)
-      ephemeral_version      = optional(string, "latest")
+      ephemeral_version      = optional(number, 0)
     }
   )
   sensitive   = true

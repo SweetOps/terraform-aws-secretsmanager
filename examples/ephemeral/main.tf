@@ -12,11 +12,11 @@ module "secrets" {
   source = "../../"
 
   secret_version = {
+    ephemeral = true
     secret_string = jsonencode(
       {
         secret_foo = "foo"
         secret_bar = "bar"
-        ephemeral  = true
       }
     )
   }
