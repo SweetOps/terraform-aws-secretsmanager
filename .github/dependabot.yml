@@ -17,7 +17,7 @@ updates:
     commit-message:
       prefix: "build:"
   - package-ecosystem: "gomod"
-    directory: "/"
+    directory: "/tests"
     schedule:
       interval: "weekly"
     labels:
