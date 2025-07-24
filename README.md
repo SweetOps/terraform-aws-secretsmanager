@@ -113,7 +113,7 @@ module "secrets" {
 | <a name="output_kms_key_arn"></a> [kms\_key\_arn](#output\_kms\_key\_arn) | KMS key ARN |
 | <a name="output_kms_key_id"></a> [kms\_key\_id](#output\_kms\_key\_id) | KMS key ID |
 | <a name="output_name"></a> [name](#output\_name) | Name of the secret |
-| <a name="output_version_id"></a> [version\_id](#output\_version\_id) | The unique identifier of the version of the secret. |
+| <a name="output_version_id"></a> [version\_id](#output\_version\_id) | The unique identifier of the version of the secret |
 <!-- END_TF_DOCS --> 
 
 ## License
