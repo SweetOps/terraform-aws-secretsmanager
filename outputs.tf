@@ -15,7 +15,7 @@ output "arn" {
 
 output "version_id" {
   value       = local.version_id
-  description = "The unique identifier of the version of the secret."
+  description = "The unique identifier of the version of the secret"
 }
 
 output "kms_key_arn" {

@@ -45,15 +45,15 @@ module "secrets" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.10 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws.ohio"></a> [aws.ohio](#provider\_aws.ohio) | >= 3.0 |
-| <a name="provider_aws.virginia"></a> [aws.virginia](#provider\_aws.virginia) | >= 3.0 |
+| <a name="provider_aws.ohio"></a> [aws.ohio](#provider\_aws.ohio) | >= 5 |
+| <a name="provider_aws.virginia"></a> [aws.virginia](#provider\_aws.virginia) | >= 5 |
 
 ## Modules
 

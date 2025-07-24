@@ -1,45 +1,3 @@
-## terraform-aws-secretsmanager
-Terraform module to provision and manage AWS Secrets Manager.
-
-## Usage
-
-```hcl
-module "label" {
-  source  = "cloudposse/label/null"
-  version = "0.25.0"
-
-  name      = "alpha"
-  namespace = "so"
-  stage     = "staging"
-}
-
-module "ssh_key_pair" {
-  source  = "cloudposse/key-pair/aws"
-  version = "0.18.1"
-
-  ssh_public_key_path = "keys/"
-  generate_ssh_key    = "true"
-
-  context = module.label.context
-}
-
-module "secrets" {
-  source  = "SweetOps/secretsmanager/aws"
-  version = "0.1.0"
-
-  secret_version = {
-    secret_string = jsonencode(
-      {
-        ssh_public_key  = base64encode(module.ssh_key_pair.public_key)
-        ssh_private_key = base64encode(module.ssh_key_pair.private_key)
-      }
-    )
-  }
-
-  context = module.label.context
-}
-```
-
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
@@ -82,7 +40,4 @@ No resources.
 | <a name="output_kms_key_id"></a> [kms\_key\_id](#output\_kms\_key\_id) | KMS key ID |
 | <a name="output_name"></a> [name](#output\_name) | Name of the secret |
 | <a name="output_version_id"></a> [version\_id](#output\_version\_id) | The unique identifier of the version of the secret. |
-<!-- END_TF_DOCS --> 
-
-## License
-The Apache-2.0 license
+<!-- END_TF_DOCS -->

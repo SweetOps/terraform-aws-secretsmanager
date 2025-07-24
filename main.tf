@@ -46,22 +46,29 @@ resource "aws_secretsmanager_secret" "default" {
 resource "aws_secretsmanager_secret_version" "default" {
   count = local.enabled && !var.secret_version["ignore_changes_enabled"] ? 1 : 0
 
-  secret_id     = local.secret_id
-  secret_string = var.secret_version["secret_string"]
-  secret_binary = var.secret_version["secret_binary"]
+  secret_id                = local.secret_id
+  secret_string            = !var.secret_version["ephemeral"] ? var.secret_version["secret_string"] : null
+  secret_binary            = !var.secret_version["ephemeral"] ? var.secret_version["secret_binary"] : null
+  secret_string_wo         = var.secret_version["ephemeral"] ? var.secret_version["secret_string"] : null
+  secret_string_wo_version = var.secret_version["ephemeral"] ? var.secret_version["ephemeral_version"] : null
 }
 
+# TODO: delete this resource when migration ephemeral secret versions is complete
 resource "aws_secretsmanager_secret_version" "ignore_changes" {
   count = local.enabled && var.secret_version["ignore_changes_enabled"] ? 1 : 0
 
-  secret_id     = local.secret_id
-  secret_string = var.secret_version["secret_string"]
-  secret_binary = var.secret_version["secret_binary"]
+  secret_id                = local.secret_id
+  secret_string            = !var.secret_version["ephemeral"] ? var.secret_version["secret_string"] : null
+  secret_binary            = !var.secret_version["ephemeral"] ? var.secret_version["secret_binary"] : null
+  secret_string_wo         = var.secret_version["ephemeral"] ? var.secret_version["secret_string"] : null
+  secret_string_wo_version = var.secret_version["ephemeral"] ? var.secret_version["ephemeral_version"] : null
 
   lifecycle {
     ignore_changes = [
       secret_string,
       secret_binary,
+      secret_string_wo,
+      secret_string_wo_version,
     ]
   }
 }

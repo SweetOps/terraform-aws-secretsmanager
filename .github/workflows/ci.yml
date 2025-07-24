@@ -4,7 +4,7 @@ on:
   pull_request:
 
 env:
-  TERRAFORM_VERSION: ~1.9
+  TERRAFORM_VERSION: ~1.12
 
 jobs:
   terraform:
@@ -82,7 +82,7 @@ jobs:
   terratest:
     name: terratest
     runs-on: ubuntu-latest
-    needs: 
+    needs:
       - terraform
       - trivy
       - tflint

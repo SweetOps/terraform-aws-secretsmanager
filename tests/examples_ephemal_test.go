@@ -9,10 +9,10 @@ import (
 	terra_ts "github.com/gruntwork-io/terratest/modules/test-structure"
 )
 
-func TestTerraformExamplesBasic(t *testing.T) {
+func TestTerraformExamplesEphemeral(t *testing.T) {
 	t.Parallel()
 
-	workingDir := initWorkingDir(t, RootFolder, "examples/basic")
+	workingDir := initWorkingDir(t, RootFolder, "examples/ephemeral")
 	ctx := context.Background()
 
 	localstackContainer, err := runLocalStack(ctx, LocalStackImage, LocalStackServices)
