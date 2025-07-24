@@ -15,5 +15,5 @@ jobs:
         if: github.actor != 'dependabot[bot]'
         uses: terraform-docs/gh-actions@v1.4.1
         with:
-          working-dir: .,./examples/basic,./examples/replicated
+          working-dir: .,./examples/basic,./examples/replicated,./examples/ephemeral
           git-push: "true"
