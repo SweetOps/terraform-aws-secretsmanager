@@ -41,6 +41,7 @@ output "arn" {
 output "version_id" {
   value       = module.secrets.version_id
   description = "The unique identifier of the version of the secret."
+  sensitive   = true
 }
 
 output "kms_key_arn" {
