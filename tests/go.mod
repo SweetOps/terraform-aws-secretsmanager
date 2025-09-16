@@ -6,7 +6,7 @@ toolchain go1.24.1
 
 require (
 	github.com/gruntwork-io/terratest v0.50.0
-	github.com/stretchr/testify v1.11.0
+	github.com/stretchr/testify v1.11.1
 	github.com/testcontainers/testcontainers-go v0.38.0
 	github.com/testcontainers/testcontainers-go/modules/localstack v0.38.0
 )
