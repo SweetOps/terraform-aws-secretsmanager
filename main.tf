@@ -4,18 +4,18 @@ locals {
   secret_id               = one(aws_secretsmanager_secret.default[*].id)
   secret_arn              = one(aws_secretsmanager_secret.default[*].arn)
   version_id              = one(aws_secretsmanager_secret_version.default[*].version_id)
-  secret_rotation_enabled = local.enabled && var.rotation["enabled"]
-  kms_key_enabled         = local.enabled && var.kms_key["enabled"]
-  kms_key_id              = var.kms_key["enabled"] ? module.kms_key.key_id : var.kms_key_id
+  secret_rotation_enabled = local.enabled && try(var.rotation.enabled, false)
+  kms_key_enabled         = local.enabled && var.kms_key.enabled
+  kms_key_id              = var.kms_key.enabled ? module.kms_key.key_id : var.kms_key_id
 }
 
 module "kms_key" {
   source  = "cloudposse/kms-key/aws"
   version = "0.12.2"
 
-  description             = var.kms_key["description"]
-  deletion_window_in_days = var.kms_key["deletion_window_in_days"]
-  enable_key_rotation     = var.kms_key["enable_key_rotation"]
+  description             = var.kms_key.description
+  deletion_window_in_days = var.kms_key.deletion_window_in_days
+  enable_key_rotation     = var.kms_key.enable_key_rotation
   alias                   = lookup(var.kms_key, "alias", format("secretsmanager/%s", module.this.id))
 
   enabled = local.kms_key_enabled
@@ -47,21 +47,21 @@ resource "aws_secretsmanager_secret_version" "default" {
   count = local.enabled ? 1 : 0
 
   secret_id                = local.secret_id
-  secret_string            = !var.secret_version["ephemeral"] ? var.secret_version["secret_string"] : null
-  secret_binary            = !var.secret_version["ephemeral"] ? var.secret_version["secret_binary"] : null
-  secret_string_wo         = var.secret_version["ephemeral"] ? var.secret_version["secret_string"] : null
-  secret_string_wo_version = var.secret_version["ephemeral"] ? var.secret_version["ephemeral_version"] : null
+  secret_string            = !var.secret_version.ephemeral ? var.secret_version.secret_string : null
+  secret_binary            = !var.secret_version.ephemeral ? var.secret_version.secret_binary : null
+  secret_string_wo         = var.secret_version.ephemeral ? var.secret_version.secret_string : null
+  secret_string_wo_version = var.secret_version.ephemeral ? var.secret_version.ephemeral_version : null
 }
 
 resource "aws_secretsmanager_secret_rotation" "default" {
   count = local.secret_rotation_enabled ? 1 : 0
 
   secret_id           = local.secret_id
-  rotation_lambda_arn = var.rotation["lambda_arn"]
+  rotation_lambda_arn = var.rotation.lambda_arn
 
   rotation_rules {
-    automatically_after_days = var.rotation["automatically_after_days"]
-    duration                 = var.rotation["duration"]
-    schedule_expression      = var.rotation["schedule_expression"]
+    automatically_after_days = var.rotation.automatically_after_days
+    duration                 = var.rotation.duration
+    schedule_expression      = var.rotation.schedule_expression
   }
 }

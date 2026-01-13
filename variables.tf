@@ -50,13 +50,15 @@ variable "kms_key_id" {
 }
 
 variable "kms_key" {
-  type = object({
-    enabled                 = optional(bool, true)
-    description             = optional(string, "Managed by Terraform")
-    alias                   = optional(string)
-    deletion_window_in_days = optional(number, 30)
-    enable_key_rotation     = optional(bool, true)
-  })
+  type = object(
+    {
+      enabled                 = optional(bool, true)
+      description             = optional(string, "Managed by Terraform")
+      alias                   = optional(string)
+      deletion_window_in_days = optional(number, 30)
+      enable_key_rotation     = optional(bool, true)
+    }
+  )
   default     = {}
   description = <<-DOC
     enabled:
@@ -100,16 +102,17 @@ variable "secret_version" {
 }
 
 variable "rotation" {
-  type = object({
-    enabled                  = optional(bool, false)
-    lambda_arn               = string
-    automatically_after_days = optional(number, null)
-    duration                 = optional(string, null)
-    schedule_expression      = optional(string, null)
-  })
-  default = {
-    lambda_arn = ""
-  }
+  type = object(
+    {
+      enabled                  = optional(bool, false)
+      lambda_arn               = string
+      automatically_after_days = optional(number, null)
+      duration                 = optional(string, null)
+      schedule_expression      = optional(string, null)
+    }
+  )
+
+  default     = null
   description = <<-DOC
     enabled:
         Whether to create secret rotation rule. 
