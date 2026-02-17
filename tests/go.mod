@@ -1,9 +1,9 @@
 module github.com/SweetOps/terraform-aws-secretsmanager
 
-go 1.25.0
+go 1.26
 
 require (
-	github.com/gruntwork-io/terratest v0.55.0
+	github.com/gruntwork-io/terratest v0.56.0
 	github.com/stretchr/testify v1.11.1
 	github.com/testcontainers/testcontainers-go v0.40.0
 	github.com/testcontainers/testcontainers-go/modules/localstack v0.40.0
