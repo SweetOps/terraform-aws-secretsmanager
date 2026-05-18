@@ -46,14 +46,14 @@ module "secrets" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.10 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws.ohio"></a> [aws.ohio](#provider\_aws.ohio) | >= 5 |
-| <a name="provider_aws.virginia"></a> [aws.virginia](#provider\_aws.virginia) | >= 5 |
+| <a name="provider_aws.ohio"></a> [aws.ohio](#provider\_aws.ohio) | >= 6 |
+| <a name="provider_aws.virginia"></a> [aws.virginia](#provider\_aws.virginia) | >= 6 |
 
 ## Modules
 

@@ -50,13 +50,15 @@ variable "kms_key_id" {
 }
 
 variable "kms_key" {
-  type = object({
-    enabled                 = optional(bool, true)
-    description             = optional(string, "Managed by Terraform")
-    alias                   = optional(string)
-    deletion_window_in_days = optional(number, 30)
-    enable_key_rotation     = optional(bool, true)
-  })
+  type = object(
+    {
+      enabled                 = optional(bool, true)
+      description             = optional(string, "Managed by Terraform")
+      alias                   = optional(string)
+      deletion_window_in_days = optional(number, 30)
+      enable_key_rotation     = optional(bool, true)
+    }
+  )
   default     = {}
   description = <<-DOC
     enabled:
@@ -76,19 +78,15 @@ variable "kms_key" {
 variable "secret_version" {
   type = object(
     {
-      secret_string          = optional(string, "{}")
-      secret_binary          = optional(string)
-      ignore_changes_enabled = optional(bool, false)
-      ephemeral              = optional(bool, false)
-      ephemeral_version      = optional(number, 0)
+      secret_string     = optional(string, "{}")
+      secret_binary     = optional(string)
+      ephemeral         = optional(bool, false)
+      ephemeral_version = optional(number, 0)
     }
   )
   sensitive   = true
   default     = {}
   description = <<-DOC
-    ignore_changes_enabled:
-        Whether to ignore changes in `secret_string` and `secret_binary`.
-        Default value: `false`
     secret_string:
         Specifies text data that you want to encrypt and store in this version of the secret. 
         This is required if `secret_binary` is not set.
@@ -104,16 +102,17 @@ variable "secret_version" {
 }
 
 variable "rotation" {
-  type = object({
-    enabled                  = optional(bool, false)
-    lambda_arn               = string
-    automatically_after_days = optional(number, null)
-    duration                 = optional(string, null)
-    schedule_expression      = optional(string, null)
-  })
-  default = {
-    lambda_arn = ""
-  }
+  type = object(
+    {
+      enabled                  = optional(bool, false)
+      lambda_arn               = string
+      automatically_after_days = optional(number, null)
+      duration                 = optional(string, null)
+      schedule_expression      = optional(string, null)
+    }
+  )
+
+  default     = null
   description = <<-DOC
     enabled:
         Whether to create secret rotation rule. 
